@@ -1,0 +1,1078 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Content Safety Internal",
+    "version": "2023-10-15-preview",
+    "description": "Content safety internal service",
+    "x-typespec-generated": [
+      {
+        "emitter": "@azure-tools/typespec-autorest"
+      }
+    ]
+  },
+  "schemes": [
+    "https"
+  ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}/contentsafety/internal",
+    "useSchemePrefix": false,
+    "parameters": [
+      {
+        "name": "endpoint",
+        "in": "path",
+        "required": true,
+        "description": "Supported Cognitive Services endpoints (protocol and hostname, for example:\nhttps://<resource-name>.cognitiveservices.azure.com).",
+        "type": "string"
+      }
+    ]
+  },
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    }
+  },
+  "tags": [],
+  "paths": {
+    "/metrics/blocklistHitCalls": {
+      "get": {
+        "operationId": "Metrics_ListBlocklistHitCalls",
+        "summary": "Show Blocklist Hit Request Count At Different Timestamps.",
+        "description": "Show blocklist hit request count at different timestamps.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of BlockListHitCallsPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The BlockListHitCallsPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/BlockListHitCallsPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/metrics/blocklistTopTerms": {
+      "get": {
+        "operationId": "Metrics_ListBlocklistTopTerms",
+        "summary": "List Top Terms Hit In Blocklist At Different Timestamps.",
+        "description": "List top terms hit in blocklist at different timestamps.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/TopTermQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.ClientRequestIdHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/TermList"
+            },
+            "headers": {
+              "x-ms-client-request-id": {
+                "description": "An opaque, globally-unique, client-generated string identifier for the request.",
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/categories/{category}/requestCounts": {
+      "get": {
+        "operationId": "Metrics_ListRequestCountsByCategoryAndSeverity",
+        "summary": "List API Request Count At Different Timestamps Of A Specific Category Given A Time Range.",
+        "description": "List API request count at different timestamps of a specific category given a time range.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "name": "category",
+            "in": "path",
+            "description": "The category of the API. The value could be Hate, Sexual, Violence, Self-Harm",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "Hate",
+              "Sexual",
+              "Violence",
+              "SelfHarm"
+            ],
+            "x-ms-enum": {
+              "name": "CategoryEnum",
+              "modelAsString": true
+            }
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ModalityTypeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of RequestCountsPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The RequestCountsPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/RequestCountsPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/metrics/requestCounts": {
+      "get": {
+        "operationId": "Metrics_ListRequestCounts",
+        "summary": "List API Request Counts At Different Timestamps Given A Time Range.",
+        "description": "List API request counts at different timestamps given a time range. Default maxpagesize is 1000.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of CountPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The CountPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/CountPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/metrics/requestLatencies": {
+      "get": {
+        "operationId": "Metrics_ListRequestLatencies",
+        "summary": "List API Request Latencies At Different Timestamps Given A Time Range.",
+        "description": "List API request latencies at different timestamps given a time range. Default maxpagesize is 1000.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/AggregationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of LatencyPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The LatencyPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/LatencyPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
+    "/whitelist/features": {
+      "get": {
+        "operationId": "WhitelistFeature_ListWhitelistFeatures",
+        "summary": "List Whitelist Features.",
+        "description": "Get whitelist features.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.ClientRequestIdHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "$ref": "#/definitions/FeatureList"
+            },
+            "headers": {
+              "x-ms-client-request-id": {
+                "description": "An opaque, globally-unique, client-generated string identifier for the request.",
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Aggregation": {
+      "type": "string",
+      "description": "Aggregation methods for latency.",
+      "enum": [
+        "P99",
+        "P95",
+        "Avg"
+      ],
+      "x-ms-enum": {
+        "name": "Aggregation",
+        "modelAsString": true
+      }
+    },
+    "Azure.Core.Foundations.Error": {
+      "type": "object",
+      "description": "The error object.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "One of a server-defined set of error codes."
+        },
+        "message": {
+          "type": "string",
+          "description": "A human-readable representation of the error."
+        },
+        "target": {
+          "type": "string",
+          "description": "The target of the error."
+        },
+        "details": {
+          "type": "array",
+          "description": "An array of details about specific errors that led to this reported error.",
+          "items": {
+            "$ref": "#/definitions/Azure.Core.Foundations.Error"
+          },
+          "x-ms-identifiers": []
+        },
+        "innererror": {
+          "$ref": "#/definitions/Azure.Core.Foundations.InnerError",
+          "description": "An object containing more specific information than the current object about the error."
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ]
+    },
+    "Azure.Core.Foundations.ErrorResponse": {
+      "type": "object",
+      "description": "A response containing error details.",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/Azure.Core.Foundations.Error",
+          "description": "The error object."
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "Azure.Core.Foundations.InnerError": {
+      "type": "object",
+      "description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "One of a server-defined set of error codes."
+        },
+        "innererror": {
+          "$ref": "#/definitions/Azure.Core.Foundations.InnerError",
+          "description": "Inner error."
+        }
+      }
+    },
+    "BlockListHitCallsPerTimestamp": {
+      "type": "object",
+      "description": "Blocklist hit call counts at a timestamp",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The call count of the hit API."
+        }
+      },
+      "required": [
+        "dateTime",
+        "count"
+      ]
+    },
+    "Category": {
+      "type": "object",
+      "description": "The detection category.",
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/CategoryEnum",
+          "description": "The category of the API. The value could be Hate, Sexual, Violence, Self-Harm"
+        }
+      },
+      "required": [
+        "category"
+      ]
+    },
+    "CategoryEnum": {
+      "type": "string",
+      "description": "Category type.",
+      "enum": [
+        "Hate",
+        "Sexual",
+        "Violence",
+        "SelfHarm"
+      ],
+      "x-ms-enum": {
+        "name": "CategoryEnum",
+        "modelAsString": true
+      }
+    },
+    "ContentModality": {
+      "type": "string",
+      "description": "Modality type.",
+      "enum": [
+        "Text",
+        "Image"
+      ],
+      "x-ms-enum": {
+        "name": "ContentModality",
+        "modelAsString": true
+      }
+    },
+    "ContentSafetyOperation": {
+      "type": "string",
+      "description": "Content safety Operation.",
+      "enum": [
+        "AnalyzeText",
+        "AnalyzeImage"
+      ],
+      "x-ms-enum": {
+        "name": "ContentSafetyOperation",
+        "modelAsString": true
+      }
+    },
+    "ContentSafetyVersion": {
+      "type": "string",
+      "description": "Content safety API version.",
+      "enum": [
+        "2023-04-30-preview",
+        "2023-10-01",
+        "2023-10-15-preview"
+      ],
+      "x-ms-enum": {
+        "name": "ContentSafetyVersion",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "v2023_04_30_Preview",
+            "value": "2023-04-30-preview"
+          },
+          {
+            "name": "v2023_10_01",
+            "value": "2023-10-01"
+          },
+          {
+            "name": "v2023_10_15_Preview",
+            "value": "2023-10-15-preview"
+          }
+        ]
+      }
+    },
+    "CountPerTimestamp": {
+      "type": "object",
+      "description": "API request count at a timestamp.",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The count of the API request."
+        }
+      },
+      "required": [
+        "dateTime",
+        "count"
+      ]
+    },
+    "Feature": {
+      "type": "object",
+      "description": "Whitelist features.",
+      "properties": {
+        "featureName": {
+          "type": "string",
+          "description": "Feature Name."
+        },
+        "properties": {
+          "$ref": "#/definitions/object",
+          "description": "The properties of the feature."
+        }
+      },
+      "required": [
+        "featureName",
+        "properties"
+      ]
+    },
+    "FeatureList": {
+      "type": "object",
+      "description": "Response of listing whitelist features.",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "List of whitelist features.",
+          "items": {
+            "$ref": "#/definitions/Feature"
+          },
+          "x-ms-identifiers": []
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "Granularity": {
+      "type": "string",
+      "description": "Time granularity.",
+      "enum": [
+        "Hourly",
+        "Daily"
+      ],
+      "x-ms-enum": {
+        "name": "Granularity",
+        "modelAsString": true
+      }
+    },
+    "LatencyPerTimestamp": {
+      "type": "object",
+      "description": "API request latency at a timestamp.",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "latency": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The aggregated latency of the API in milliseconds."
+        }
+      },
+      "required": [
+        "dateTime",
+        "latency"
+      ]
+    },
+    "RequestCountsPerTimestamp": {
+      "type": "object",
+      "description": "API request count at a timestamp",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "count": {
+          "type": "array",
+          "description": "The count of the request.",
+          "items": {
+            "$ref": "#/definitions/Severity"
+          },
+          "x-ms-identifiers": []
+        }
+      },
+      "required": [
+        "dateTime",
+        "count"
+      ]
+    },
+    "Severity": {
+      "type": "object",
+      "description": "Severity and count the API detected.",
+      "properties": {
+        "severity": {
+          "$ref": "#/definitions/SeverityEnum",
+          "description": "The severity the API returned."
+        },
+        "severityCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The count of the severity."
+        }
+      },
+      "required": [
+        "severity",
+        "severityCount"
+      ]
+    },
+    "SeverityEnum": {
+      "type": "number",
+      "description": "Severity level. The higher the value, the more risk it is.",
+      "enum": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "x-ms-enum": {
+        "name": "SeverityEnum",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "Zero",
+            "value": 0
+          },
+          {
+            "name": "Two",
+            "value": 2
+          },
+          {
+            "name": "Four",
+            "value": 4
+          },
+          {
+            "name": "Six",
+            "value": 6
+          }
+        ]
+      }
+    },
+    "TermList": {
+      "type": "object",
+      "description": "Response of listing hit terms.",
+      "properties": {
+        "value": {
+          "type": "array",
+          "description": "List of terms.",
+          "items": {
+            "$ref": "#/definitions/TopTermCount"
+          },
+          "x-ms-identifiers": []
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "TopTermCount": {
+      "type": "object",
+      "description": "Popular term and it's API count.",
+      "properties": {
+        "term": {
+          "type": "string",
+          "description": "The term content."
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The API call count of the term."
+        }
+      },
+      "required": [
+        "term",
+        "count"
+      ]
+    },
+    "Versions": {
+      "type": "string",
+      "enum": [
+        "2023-04-30-preview",
+        "2023-05-30-preview",
+        "2023-10-01",
+        "2023-10-15-preview"
+      ],
+      "x-ms-enum": {
+        "name": "Versions",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "v2023_04_30_Preview",
+            "value": "2023-04-30-preview"
+          },
+          {
+            "name": "v2023_05_30_Preview",
+            "value": "2023-05-30-preview"
+          },
+          {
+            "name": "v2023_10_01",
+            "value": "2023-10-01"
+          },
+          {
+            "name": "v2023_10_15_Preview",
+            "value": "2023-10-15-preview"
+          }
+        ]
+      }
+    },
+    "object": {
+      "type": "object",
+      "description": "Represent a model",
+      "properties": {}
+    }
+  },
+  "parameters": {
+    "AggregationQueryParameter": {
+      "name": "aggregation",
+      "in": "query",
+      "description": "Aggregation method of the latency, the value could be 'Percentile99', 'Percentile95', 'Average'.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "P99",
+        "P95",
+        "Avg"
+      ],
+      "x-ms-enum": {
+        "name": "Aggregation",
+        "modelAsString": true
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "Azure.Core.ClientRequestIdHeader": {
+      "name": "x-ms-client-request-id",
+      "in": "header",
+      "description": "An opaque, globally-unique, client-generated string identifier for the request.",
+      "required": false,
+      "type": "string",
+      "format": "uuid",
+      "x-ms-parameter-location": "method",
+      "x-ms-client-name": "clientRequestId"
+    },
+    "Azure.Core.Foundations.ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "description": "The API version to use for this operation.",
+      "required": true,
+      "type": "string",
+      "minLength": 1,
+      "x-ms-parameter-location": "method",
+      "x-ms-client-name": "apiVersion"
+    },
+    "Azure.Core.MaxPageSizeQueryParameter": {
+      "name": "maxpagesize",
+      "in": "query",
+      "description": "The maximum number of result items per page.",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "x-ms-parameter-location": "method"
+    },
+    "Azure.Core.SkipQueryParameter": {
+      "name": "skip",
+      "in": "query",
+      "description": "The number of result items to skip.",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "default": 0,
+      "x-ms-parameter-location": "method"
+    },
+    "Azure.Core.TopQueryParameter": {
+      "name": "top",
+      "in": "query",
+      "description": "The number of result items to return.",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "x-ms-parameter-location": "method"
+    },
+    "ContentSafetyOperationQueryParameter": {
+      "name": "contentSafetyOperation",
+      "in": "query",
+      "description": "Content safety operation, the value could be 'AnalyzeText', 'AnalyzeImage'.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "AnalyzeText",
+        "AnalyzeImage"
+      ],
+      "x-ms-enum": {
+        "name": "ContentSafetyOperation",
+        "modelAsString": true
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "ContentSafetyVersionQueryParameter": {
+      "name": "contentSafetyVersion",
+      "in": "query",
+      "description": "API version of the call, the value could be '2023-04-30-preview'.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "2023-04-30-preview",
+        "2023-10-01",
+        "2023-10-15-preview"
+      ],
+      "x-ms-enum": {
+        "name": "ContentSafetyVersion",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "v2023_04_30_Preview",
+            "value": "2023-04-30-preview"
+          },
+          {
+            "name": "v2023_10_01",
+            "value": "2023-10-01"
+          },
+          {
+            "name": "v2023_10_15_Preview",
+            "value": "2023-10-15-preview"
+          }
+        ]
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "EndTimeQueryParameter": {
+      "name": "end",
+      "in": "query",
+      "description": "End date time inclusive.",
+      "required": true,
+      "type": "string",
+      "format": "date-time",
+      "x-ms-parameter-location": "method"
+    },
+    "ModalityTypeQueryParameter": {
+      "name": "modality",
+      "in": "query",
+      "description": "Modality type, the value could be 'Text', 'Image'.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "Text",
+        "Image"
+      ],
+      "x-ms-enum": {
+        "name": "ContentModality",
+        "modelAsString": true
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "ProjectNameQueryParameter": {
+      "name": "projectName",
+      "in": "query",
+      "description": "The project name.",
+      "required": false,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "StartTimeQueryParameter": {
+      "name": "start",
+      "in": "query",
+      "description": "Start date time inclusive.",
+      "required": true,
+      "type": "string",
+      "format": "date-time",
+      "x-ms-parameter-location": "method"
+    },
+    "TimeGranularityQueryParameter": {
+      "name": "granularity",
+      "in": "query",
+      "description": "Granularity, the value could be 'Hourly', 'Daily'.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "Hourly",
+        "Daily"
+      ],
+      "x-ms-enum": {
+        "name": "Granularity",
+        "modelAsString": true
+      },
+      "x-ms-parameter-location": "method"
+    },
+    "TopTermQueryParameter": {
+      "name": "top",
+      "in": "query",
+      "description": "The number of result items to return. ",
+      "required": true,
+      "type": "integer",
+      "format": "int32",
+      "x-ms-parameter-location": "method"
+    }
+  }
+}
