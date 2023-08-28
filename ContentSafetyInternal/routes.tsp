@@ -123,4 +123,23 @@ interface Metrics {
     ...ProjectNameQueryParameter
     }>
   >;
+
+  @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+  @route("/metrics")
+  @summary("List API Reject Counts At Different Timestamps Given A Time Range.")
+  @doc("List API reject counts at different timestamps given a time range. Default maxpagesize is 1000.")
+  op listRejectCounts is BlockOps.ResourceList<
+    RejectCountPerTimestamp,
+    ListQueryParametersTrait<{
+      ...SkipQueryParameter,
+      ...TopQueryParameter,
+      ...MaxPageSizeQueryParameter,
+      ...StartTimeQueryParameter,
+      ...EndTimeQueryParameter,
+      ...TimeGranularityQueryParameter,
+      ...ContentSafetyVersionQueryParameter,
+      ...ProjectNameQueryParameter
+    }>
+  >;
+
 }

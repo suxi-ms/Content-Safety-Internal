@@ -237,6 +237,28 @@ model TopTermQueryParameter {
 @doc("Provides the 'projectName' query parameter for list operations.")
 model ProjectNameQueryParameter {
   @query
-  @doc("The project name.")
+  @doc("The project name. Service will throw 404 if project does not exist.")
   projectName?: string;
+}
+
+@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@doc("Aggregation methods for latency.")
+enum RejectKind {
+  @doc("AI reject.")
+  AI,
+  @doc("General reject, determined by AI and blocklist.")
+  General
+}
+
+@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@doc("API reject count at a timestamp.")
+@resource("rejectCounts")
+model RejectCountPerTimestamp {
+  #suppress "@azure-tools/typespec-azure-core/key-visibility-required" "Properties in response-only schemas should not be marked readOnly"
+  @key("dateTime")
+  @doc("The date time.")
+  dateTime: utcDateTime;
+
+  @doc("The count of the API request.")
+  count: int32;
 }
