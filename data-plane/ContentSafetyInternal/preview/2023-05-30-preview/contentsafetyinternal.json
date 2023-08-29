@@ -79,7 +79,7 @@
           {
             "name": "projectName",
             "in": "query",
-            "description": "The project name.",
+            "description": "The project name. Service will throw 404 if project does not exist.",
             "required": false,
             "type": "string"
           }
@@ -152,7 +152,7 @@
           {
             "name": "projectName",
             "in": "query",
-            "description": "The project name.",
+            "description": "The project name. Service will throw 404 if project does not exist.",
             "required": false,
             "type": "string"
           },
@@ -242,7 +242,7 @@
           {
             "name": "projectName",
             "in": "query",
-            "description": "The project name.",
+            "description": "The project name. Service will throw 404 if project does not exist.",
             "required": false,
             "type": "string"
           }
@@ -327,7 +327,7 @@
           {
             "name": "projectName",
             "in": "query",
-            "description": "The project name.",
+            "description": "The project name. Service will throw 404 if project does not exist.",
             "required": false,
             "type": "string"
           }
@@ -415,7 +415,7 @@
           {
             "name": "projectName",
             "in": "query",
-            "description": "The project name.",
+            "description": "The project name. Service will throw 404 if project does not exist.",
             "required": false,
             "type": "string"
           }

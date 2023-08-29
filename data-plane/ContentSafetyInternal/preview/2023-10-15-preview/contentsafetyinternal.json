@@ -279,6 +279,87 @@
         }
       }
     },
+    "/metrics/rejectCounts": {
+      "get": {
+        "operationId": "Metrics_ListRejectCounts",
+        "summary": "List API Reject Counts At Different Timestamps Given A Time Range.",
+        "description": "List API reject counts at different timestamps given a time range. Default maxpagesize is 1000.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ProjectNameQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of RejectCountPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The RejectCountPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/RejectCountPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
     "/metrics/requestCounts": {
       "get": {
         "operationId": "Metrics_ListRequestCounts",
@@ -747,6 +828,50 @@
         "latency"
       ]
     },
+    "RejectCountPerTimestamp": {
+      "type": "object",
+      "description": "API reject count at a timestamp.",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The count of the API request."
+        }
+      },
+      "required": [
+        "dateTime",
+        "count"
+      ]
+    },
+    "RejectKind": {
+      "type": "string",
+      "description": "Aggregation methods for latency.",
+      "enum": [
+        "AI",
+        "General"
+      ],
+      "x-ms-enum": {
+        "name": "RejectKind",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "AI",
+            "value": "AI",
+            "description": "AI reject."
+          },
+          {
+            "name": "General",
+            "value": "General",
+            "description": "General reject, determined by AI and blocklist."
+          }
+        ]
+      }
+    },
     "RequestCountsPerTimestamp": {
       "type": "object",
       "description": "API request count at a timestamp",
@@ -1035,7 +1160,7 @@
     "ProjectNameQueryParameter": {
       "name": "projectName",
       "in": "query",
-      "description": "The project name.",
+      "description": "The project name. Service will throw 404 if project does not exist.",
       "required": false,
       "type": "string",
       "x-ms-parameter-location": "method"
