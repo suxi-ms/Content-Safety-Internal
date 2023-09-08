@@ -766,7 +766,7 @@
           "format": "date-time",
           "description": "The date time."
         },
-        "count": {
+        "severityCounts": {
           "type": "array",
           "description": "The count of the request.",
           "items": {
@@ -777,7 +777,7 @@
       },
       "required": [
         "dateTime",
-        "count"
+        "severityCounts"
       ]
     },
     "Severity": {
@@ -788,7 +788,7 @@
           "$ref": "#/definitions/SeverityEnum",
           "description": "The severity the API returned."
         },
-        "severityCount": {
+        "count": {
           "type": "integer",
           "format": "int32",
           "description": "The count of the severity."
@@ -796,7 +796,7 @@
       },
       "required": [
         "severity",
-        "severityCount"
+        "count"
       ]
     },
     "SeverityEnum": {

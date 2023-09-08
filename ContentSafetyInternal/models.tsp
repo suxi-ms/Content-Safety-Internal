@@ -149,7 +149,7 @@ model Severity {
   severity: SeverityEnum;
 
   @doc("The count of the severity.")
-  severityCount: int32;
+  count: int32;
 }
 
 @doc("API request count at a timestamp")
@@ -162,7 +162,7 @@ model RequestCountsPerTimestamp {
   dateTime: utcDateTime;
 
   @doc("The count of the request.")
-  count: Severity[];
+  severityCounts: Severity[];
 }
 
 @doc("Blocklist hit call counts at a timestamp")
@@ -239,6 +239,13 @@ model ProjectNameQueryParameter {
   @query
   @doc("The project name. Service will throw 404 if project does not exist.")
   projectName?: string;
+}
+@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@doc("Provides the 'projectName' query parameter for list operations.")
+model RequiredProjectNameQueryParameter {
+  @query
+  @doc("The project name. Service will throw 404 if project does not exist.")
+  projectName: string;
 }
 
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
