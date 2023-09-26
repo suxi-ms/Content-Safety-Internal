@@ -240,12 +240,21 @@ model ProjectNameQueryParameter {
   @doc("The project name. Service will throw 404 if project does not exist.")
   projectName?: string;
 }
+
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
 @doc("Provides the 'projectName' query parameter for list operations.")
 model RequiredProjectNameQueryParameter {
   @query
   @doc("The project name. Service will throw 404 if project does not exist.")
   projectName: string;
+}
+
+@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@doc("Provides the 'projectName' query parameter for list operations.")
+model RequiredRejectKindQueryParameter {
+  @query
+  @doc("The project name. Service will throw 404 if project does not exist.")
+  rejectKind: RejectKind;
 }
 
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)

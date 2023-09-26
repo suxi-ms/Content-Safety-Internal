@@ -139,7 +139,8 @@ interface Metrics {
       ...TimeGranularityQueryParameter,
       ...ContentSafetyVersionQueryParameter,
       ...ContentSafetyOperationQueryParameter,
-      ...RequiredProjectNameQueryParameter
+      ...RequiredProjectNameQueryParameter,
+      ...RequiredRejectKindQueryParameter
     }>
   >;
 
