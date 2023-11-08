@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Content Safety Internal",
-    "version": "2023-10-15-preview",
+    "version": "2023-10-30-preview",
     "description": "Content safety internal service",
     "x-typespec-generated": [
       {
@@ -247,90 +247,6 @@
                   "description": "The RequestCountsPerTimestamp items on this page",
                   "items": {
                     "$ref": "#/definitions/RequestCountsPerTimestamp"
-                  },
-                  "x-ms-identifiers": []
-                },
-                "nextLink": {
-                  "type": "string",
-                  "format": "uri",
-                  "description": "The link to the next page of items"
-                }
-              },
-              "required": [
-                "value"
-              ]
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
-            },
-            "headers": {
-              "x-ms-error-code": {
-                "description": "String error code indicating what went wrong.",
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-ms-pageable": {
-          "nextLinkName": "nextLink"
-        }
-      }
-    },
-    "/metrics/rejectCounts": {
-      "get": {
-        "operationId": "Metrics_ListRejectCounts",
-        "summary": "List API Reject Counts At Different Timestamps Given A Time Range.",
-        "description": "List API reject counts at different timestamps given a time range. Default maxpagesize is 1000.",
-        "parameters": [
-          {
-            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/StartTimeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/EndTimeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/TimeGranularityQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/RequiredProjectNameQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/RequiredRejectKindQueryParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "type": "object",
-              "description": "Paged collection of RejectCountPerTimestamp items",
-              "properties": {
-                "value": {
-                  "type": "array",
-                  "description": "The RejectCountPerTimestamp items on this page",
-                  "items": {
-                    "$ref": "#/definitions/RejectCountPerTimestamp"
                   },
                   "x-ms-identifiers": []
                 },
@@ -698,7 +614,8 @@
       "description": "Modality type.",
       "enum": [
         "Text",
-        "Image"
+        "Image",
+        "ImageWithText"
       ],
       "x-ms-enum": {
         "name": "ContentModality",
@@ -710,7 +627,8 @@
       "description": "Content safety Operation.",
       "enum": [
         "AnalyzeText",
-        "AnalyzeImage"
+        "AnalyzeImage",
+        "AnalyzeImageWithText"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
@@ -723,7 +641,8 @@
       "enum": [
         "2023-04-30-preview",
         "2023-10-01",
-        "2023-10-15-preview"
+        "2023-10-15-preview",
+        "2023-10-30-preview"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyVersion",
@@ -740,6 +659,10 @@
           {
             "name": "v2023_10_15_Preview",
             "value": "2023-10-15-preview"
+          },
+          {
+            "name": "v2023_10_30_Preview",
+            "value": "2023-10-30-preview"
           }
         ]
       }
@@ -896,6 +819,32 @@
       "required": [
         "dateTime",
         "severityCounts"
+      ]
+    },
+    "RequiredProjectNameQueryParameter": {
+      "type": "object",
+      "description": "Provides the 'projectName' query parameter for list operations.",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "description": "The project name. Service will throw 404 if project does not exist."
+        }
+      },
+      "required": [
+        "projectName"
+      ]
+    },
+    "RequiredRejectKindQueryParameter": {
+      "type": "object",
+      "description": "Provides the 'projectName' query parameter for list operations.",
+      "properties": {
+        "rejectKind": {
+          "$ref": "#/definitions/RejectKind",
+          "description": "The project name. Service will throw 404 if project does not exist."
+        }
+      },
+      "required": [
+        "rejectKind"
       ]
     },
     "Severity": {
@@ -1101,7 +1050,8 @@
       "type": "string",
       "enum": [
         "AnalyzeText",
-        "AnalyzeImage"
+        "AnalyzeImage",
+        "AnalyzeImageWithText"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
@@ -1118,7 +1068,8 @@
       "enum": [
         "2023-04-30-preview",
         "2023-10-01",
-        "2023-10-15-preview"
+        "2023-10-15-preview",
+        "2023-10-30-preview"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyVersion",
@@ -1135,6 +1086,10 @@
           {
             "name": "v2023_10_15_Preview",
             "value": "2023-10-15-preview"
+          },
+          {
+            "name": "v2023_10_30_Preview",
+            "value": "2023-10-30-preview"
           }
         ]
       },
@@ -1157,7 +1112,8 @@
       "type": "string",
       "enum": [
         "Text",
-        "Image"
+        "Image",
+        "ImageWithText"
       ],
       "x-ms-enum": {
         "name": "ContentModality",
@@ -1171,42 +1127,6 @@
       "description": "The project name. Service will throw 404 if project does not exist.",
       "required": false,
       "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "RequiredProjectNameQueryParameter": {
-      "name": "projectName",
-      "in": "query",
-      "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
-      "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "RequiredRejectKindQueryParameter": {
-      "name": "rejectKind",
-      "in": "query",
-      "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
-      "type": "string",
-      "enum": [
-        "AI",
-        "General"
-      ],
-      "x-ms-enum": {
-        "name": "RejectKind",
-        "modelAsString": true,
-        "values": [
-          {
-            "name": "AI",
-            "value": "AI",
-            "description": "AI reject."
-          },
-          {
-            "name": "General",
-            "value": "General",
-            "description": "General reject, determined by AI and blocklist."
-          }
-        ]
-      },
       "x-ms-parameter-location": "method"
     },
     "StartTimeQueryParameter": {
