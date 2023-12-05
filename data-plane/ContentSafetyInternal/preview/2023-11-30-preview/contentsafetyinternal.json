@@ -311,9 +311,6 @@
           },
           {
             "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/RequiredProjectNameQueryParameter"
           }
         ],
         "responses": {
@@ -929,6 +926,19 @@
         "severityCounts"
       ]
     },
+    "RequiredProjectNameQueryParameter": {
+      "type": "object",
+      "description": "Provides the 'projectName' query parameter for list operations.",
+      "properties": {
+        "projectName": {
+          "type": "string",
+          "description": "The project name. Service will throw 404 if project does not exist."
+        }
+      },
+      "required": [
+        "projectName"
+      ]
+    },
     "RequiredRejectKindQueryParameter": {
       "type": "object",
       "description": "Provides the 'projectName' query parameter for list operations.",
@@ -1233,14 +1243,6 @@
       "in": "query",
       "description": "The project name. Service will throw 404 if project does not exist.",
       "required": false,
-      "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "RequiredProjectNameQueryParameter": {
-      "name": "projectName",
-      "in": "query",
-      "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
       "type": "string",
       "x-ms-parameter-location": "method"
     },

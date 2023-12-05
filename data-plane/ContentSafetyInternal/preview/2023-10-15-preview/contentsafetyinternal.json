@@ -311,9 +311,6 @@
           },
           {
             "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/RequiredProjectNameQueryParameter"
           }
         ],
         "responses": {
