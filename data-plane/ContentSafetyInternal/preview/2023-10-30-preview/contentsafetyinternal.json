@@ -314,9 +314,6 @@
           },
           {
             "$ref": "#/parameters/RequiredProjectNameQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/RequiredRejectKindQueryParameter"
           }
         ],
         "responses": {
@@ -927,6 +924,19 @@
         "severityCounts"
       ]
     },
+    "RequiredRejectKindQueryParameter": {
+      "type": "object",
+      "description": "Provides the 'projectName' query parameter for list operations.",
+      "properties": {
+        "rejectKind": {
+          "$ref": "#/definitions/RejectKind",
+          "description": "The project name. Service will throw 404 if project does not exist."
+        }
+      },
+      "required": [
+        "rejectKind"
+      ]
+    },
     "Severity": {
       "type": "object",
       "description": "Severity and count the API detected.",
@@ -1222,34 +1232,6 @@
       "description": "The project name. Service will throw 404 if project does not exist.",
       "required": true,
       "type": "string",
-      "x-ms-parameter-location": "method"
-    },
-    "RequiredRejectKindQueryParameter": {
-      "name": "rejectKind",
-      "in": "query",
-      "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
-      "type": "string",
-      "enum": [
-        "AI",
-        "General"
-      ],
-      "x-ms-enum": {
-        "name": "RejectKind",
-        "modelAsString": true,
-        "values": [
-          {
-            "name": "AI",
-            "value": "AI",
-            "description": "AI reject."
-          },
-          {
-            "name": "General",
-            "value": "General",
-            "description": "General reject, determined by AI and blocklist."
-          }
-        ]
-      },
       "x-ms-parameter-location": "method"
     },
     "StartTimeQueryParameter": {
