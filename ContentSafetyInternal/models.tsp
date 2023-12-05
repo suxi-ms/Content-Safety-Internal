@@ -52,7 +52,11 @@ enum ContentSafetyOperation {
   @added(ContentSafetyInternal.Versions.v2023_05_30_Preview)
   @removed(ContentSafetyInternal.Versions.v2023_10_01)
   @added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
-  AnalyzeImageWithText
+  AnalyzeImageWithText,
+  @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+  DetectJailbreak,
+  @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+  DetectProtectedMaterial
 }
 
 @doc("Content safety API version.")
@@ -66,7 +70,10 @@ enum ContentSafetyVersion {
   @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
   v2023_10_15_Preview: "2023-10-15-preview",
   @added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
-  v2023_10_30_Preview: "2023-10-30-preview"
+  v2023_10_30_Preview: "2023-10-30-preview",
+  @added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
+  v2023_11_30_Preview: "2023-11-30-preview"
+
 }
 
 @doc("Category type.")
@@ -280,5 +287,20 @@ model RejectCountPerTimestamp {
   dateTime: utcDateTime;
 
   @doc("The count of the API request.")
+  count: int32;
+}
+
+@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
+@added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
+@doc("Detected counts at a timestamp")
+@resource("detectedCounts")
+model DetectedCountsPerTimestamp {
+  #suppress "@azure-tools/typespec-azure-core/key-visibility-required" "Properties in response-only schemas should not be marked readOnly"
+  @key("dateTime")
+  @doc("The date time.")
+  dateTime: utcDateTime;
+
+  @doc("The call count of the hit API.")
   count: int32;
 }

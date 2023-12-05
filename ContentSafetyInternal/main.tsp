@@ -36,4 +36,5 @@ enum Versions {
   v2023_10_01: "2023-10-01",
   v2023_10_15_Preview: "2023-10-15-preview",
   v2023_10_30_Preview: "2023-10-30-preview",
+  v2023_11_30_Preview: "2023-11-30-preview",
 }
