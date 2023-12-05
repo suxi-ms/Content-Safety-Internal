@@ -279,6 +279,90 @@
         }
       }
     },
+    "/metrics/detectedCounts": {
+      "get": {
+        "operationId": "Metrics_ListDetectedCounts",
+        "summary": "List API Detected Counts At Different Timestamps Given A Time Range.",
+        "description": "List API detected counts at different timestamps given a time range. Default maxpagesize is 1000.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/TimeGranularityQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/RequiredProjectNameQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/RequiredRejectKindQueryParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request has succeeded.",
+            "schema": {
+              "type": "object",
+              "description": "Paged collection of DetectedCountsPerTimestamp items",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "The DetectedCountsPerTimestamp items on this page",
+                  "items": {
+                    "$ref": "#/definitions/DetectedCountsPerTimestamp"
+                  },
+                  "x-ms-identifiers": []
+                },
+                "nextLink": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "The link to the next page of items"
+                }
+              },
+              "required": [
+                "value"
+              ]
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
+            },
+            "headers": {
+              "x-ms-error-code": {
+                "description": "String error code indicating what went wrong.",
+                "type": "string"
+              }
+            }
+          }
+        },
+        "x-ms-pageable": {
+          "nextLinkName": "nextLink"
+        }
+      }
+    },
     "/metrics/requestCounts": {
       "get": {
         "operationId": "Metrics_ListRequestCounts",
@@ -628,7 +712,9 @@
       "enum": [
         "AnalyzeText",
         "AnalyzeImage",
-        "AnalyzeImageWithText"
+        "AnalyzeImageWithText",
+        "DetectJailbreak",
+        "DetectProtectedMaterial"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
@@ -680,6 +766,26 @@
           "type": "integer",
           "format": "int32",
           "description": "The count of the API request."
+        }
+      },
+      "required": [
+        "dateTime",
+        "count"
+      ]
+    },
+    "DetectedCountsPerTimestamp": {
+      "type": "object",
+      "description": "Detected counts at a timestamp",
+      "properties": {
+        "dateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date time."
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The call count of the hit API."
         }
       },
       "required": [
@@ -821,32 +927,6 @@
         "severityCounts"
       ]
     },
-    "RequiredProjectNameQueryParameter": {
-      "type": "object",
-      "description": "Provides the 'projectName' query parameter for list operations.",
-      "properties": {
-        "projectName": {
-          "type": "string",
-          "description": "The project name. Service will throw 404 if project does not exist."
-        }
-      },
-      "required": [
-        "projectName"
-      ]
-    },
-    "RequiredRejectKindQueryParameter": {
-      "type": "object",
-      "description": "Provides the 'projectName' query parameter for list operations.",
-      "properties": {
-        "rejectKind": {
-          "$ref": "#/definitions/RejectKind",
-          "description": "The project name. Service will throw 404 if project does not exist."
-        }
-      },
-      "required": [
-        "rejectKind"
-      ]
-    },
     "Severity": {
       "type": "object",
       "description": "Severity and count the API detected.",
@@ -941,7 +1021,8 @@
         "2023-05-30-preview",
         "2023-10-01",
         "2023-10-15-preview",
-        "2023-10-30-preview"
+        "2023-10-30-preview",
+        "2023-11-30-preview"
       ],
       "x-ms-enum": {
         "name": "Versions",
@@ -966,6 +1047,10 @@
           {
             "name": "v2023_10_30_Preview",
             "value": "2023-10-30-preview"
+          },
+          {
+            "name": "v2023_11_30_Preview",
+            "value": "2023-11-30-preview"
           }
         ]
       }
@@ -1051,7 +1136,9 @@
       "enum": [
         "AnalyzeText",
         "AnalyzeImage",
-        "AnalyzeImageWithText"
+        "AnalyzeImageWithText",
+        "DetectJailbreak",
+        "DetectProtectedMaterial"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
@@ -1127,6 +1214,42 @@
       "description": "The project name. Service will throw 404 if project does not exist.",
       "required": false,
       "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "RequiredProjectNameQueryParameter": {
+      "name": "projectName",
+      "in": "query",
+      "description": "The project name. Service will throw 404 if project does not exist.",
+      "required": true,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "RequiredRejectKindQueryParameter": {
+      "name": "rejectKind",
+      "in": "query",
+      "description": "The project name. Service will throw 404 if project does not exist.",
+      "required": true,
+      "type": "string",
+      "enum": [
+        "AI",
+        "General"
+      ],
+      "x-ms-enum": {
+        "name": "RejectKind",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "AI",
+            "value": "AI",
+            "description": "AI reject."
+          },
+          {
+            "name": "General",
+            "value": "General",
+            "description": "General reject, determined by AI and blocklist."
+          }
+        ]
+      },
       "x-ms-parameter-location": "method"
     },
     "StartTimeQueryParameter": {
