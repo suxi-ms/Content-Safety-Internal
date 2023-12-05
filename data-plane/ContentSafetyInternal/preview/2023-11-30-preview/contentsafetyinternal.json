@@ -279,7 +279,7 @@
         }
       }
     },
-    "/metrics/detectedCounts": {
+    "/metrics/detectCounts": {
       "get": {
         "operationId": "Metrics_ListDetectedCounts",
         "summary": "List API Detected Counts At Different Timestamps Given A Time Range.",
@@ -318,13 +318,13 @@
             "description": "The request has succeeded.",
             "schema": {
               "type": "object",
-              "description": "Paged collection of DetectedCountsPerTimestamp items",
+              "description": "Paged collection of DetectCountsPerTimestamp items",
               "properties": {
                 "value": {
                   "type": "array",
-                  "description": "The DetectedCountsPerTimestamp items on this page",
+                  "description": "The DetectCountsPerTimestamp items on this page",
                   "items": {
-                    "$ref": "#/definitions/DetectedCountsPerTimestamp"
+                    "$ref": "#/definitions/DetectCountsPerTimestamp"
                   },
                   "x-ms-identifiers": []
                 },
@@ -772,7 +772,7 @@
         "count"
       ]
     },
-    "DetectedCountsPerTimestamp": {
+    "DetectCountsPerTimestamp": {
       "type": "object",
       "description": "Detected counts at a timestamp",
       "properties": {

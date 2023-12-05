@@ -294,8 +294,8 @@ model RejectCountPerTimestamp {
 @added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
 @added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
 @doc("Detected counts at a timestamp")
-@resource("detectedCounts")
-model DetectedCountsPerTimestamp {
+@resource("detectCounts")
+model DetectCountsPerTimestamp {
   #suppress "@azure-tools/typespec-azure-core/key-visibility-required" "Properties in response-only schemas should not be marked readOnly"
   @key("dateTime")
   @doc("The date time.")

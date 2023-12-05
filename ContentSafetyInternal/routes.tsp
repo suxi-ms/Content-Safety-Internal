@@ -153,7 +153,7 @@ interface Metrics {
   @summary("List API Detected Counts At Different Timestamps Given A Time Range.")
   @doc("List API detected counts at different timestamps given a time range. Default maxpagesize is 1000.")
   op listDetectedCounts is BlockOps.ResourceList<
-    DetectedCountsPerTimestamp,
+    DetectCountsPerTimestamp,
     ListQueryParametersTrait<{
       ...SkipQueryParameter,
       ...TopQueryParameter,
