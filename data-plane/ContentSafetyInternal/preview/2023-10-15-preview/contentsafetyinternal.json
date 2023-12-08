@@ -279,84 +279,6 @@
         }
       }
     },
-    "/metrics/detectCounts": {
-      "get": {
-        "operationId": "Metrics_ListDetectedCounts",
-        "summary": "List API Detected Counts At Different Timestamps Given A Time Range.",
-        "description": "List API detected counts at different timestamps given a time range. Default maxpagesize is 1000.",
-        "parameters": [
-          {
-            "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.SkipQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.TopQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/Azure.Core.MaxPageSizeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/StartTimeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/EndTimeQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/TimeGranularityQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/ContentSafetyVersionQueryParameter"
-          },
-          {
-            "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The request has succeeded.",
-            "schema": {
-              "type": "object",
-              "description": "Paged collection of DetectCountsPerTimestamp items",
-              "properties": {
-                "value": {
-                  "type": "array",
-                  "description": "The DetectCountsPerTimestamp items on this page",
-                  "items": {
-                    "$ref": "#/definitions/DetectCountsPerTimestamp"
-                  },
-                  "x-ms-identifiers": []
-                },
-                "nextLink": {
-                  "type": "string",
-                  "format": "uri",
-                  "description": "The link to the next page of items"
-                }
-              },
-              "required": [
-                "value"
-              ]
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/Azure.Core.Foundations.ErrorResponse"
-            },
-            "headers": {
-              "x-ms-error-code": {
-                "description": "String error code indicating what went wrong.",
-                "type": "string"
-              }
-            }
-          }
-        },
-        "x-ms-pageable": {
-          "nextLinkName": "nextLink"
-        }
-      }
-    },
     "/metrics/rejectCounts": {
       "get": {
         "operationId": "Metrics_ListRejectCounts",
@@ -844,26 +766,6 @@
         "count"
       ]
     },
-    "DetectCountsPerTimestamp": {
-      "type": "object",
-      "description": "Detected counts at a timestamp",
-      "properties": {
-        "dateTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The date time."
-        },
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The call count of the hit API."
-        }
-      },
-      "required": [
-        "dateTime",
-        "count"
-      ]
-    },
     "Feature": {
       "type": "object",
       "description": "Whitelist features.",
@@ -1284,7 +1186,7 @@
       "name": "projectName",
       "in": "query",
       "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
+      "required": false,
       "type": "string",
       "x-ms-parameter-location": "method"
     },
@@ -1292,7 +1194,7 @@
       "name": "rejectKind",
       "in": "query",
       "description": "The project name. Service will throw 404 if project does not exist.",
-      "required": true,
+      "required": false,
       "type": "string",
       "enum": [
         "AI",

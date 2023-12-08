@@ -279,11 +279,11 @@
         }
       }
     },
-    "/metrics/detectCounts": {
+    "/metrics/rejectCounts": {
       "get": {
-        "operationId": "Metrics_ListDetectedCounts",
-        "summary": "List API Detected Counts At Different Timestamps Given A Time Range.",
-        "description": "List API detected counts at different timestamps given a time range. Default maxpagesize is 1000.",
+        "operationId": "Metrics_ListRejectCounts",
+        "summary": "List API Reject Counts At Different Timestamps Given A Time Range.",
+        "description": "List API reject counts at different timestamps given a time range. Default maxpagesize is 1000.",
         "parameters": [
           {
             "$ref": "#/parameters/Azure.Core.Foundations.ApiVersionParameter"
@@ -311,6 +311,12 @@
           },
           {
             "$ref": "#/parameters/ContentSafetyOperationQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/RequiredProjectNameQueryParameter"
+          },
+          {
+            "$ref": "#/parameters/RequiredRejectKindQueryParameter"
           }
         ],
         "responses": {
@@ -318,13 +324,13 @@
             "description": "The request has succeeded.",
             "schema": {
               "type": "object",
-              "description": "Paged collection of DetectCountsPerTimestamp items",
+              "description": "Paged collection of RejectCountPerTimestamp items",
               "properties": {
                 "value": {
                   "type": "array",
-                  "description": "The DetectCountsPerTimestamp items on this page",
+                  "description": "The RejectCountPerTimestamp items on this page",
                   "items": {
-                    "$ref": "#/definitions/DetectCountsPerTimestamp"
+                    "$ref": "#/definitions/RejectCountPerTimestamp"
                   },
                   "x-ms-identifiers": []
                 },
@@ -772,26 +778,6 @@
         "count"
       ]
     },
-    "DetectCountsPerTimestamp": {
-      "type": "object",
-      "description": "Detected counts at a timestamp",
-      "properties": {
-        "dateTime": {
-          "type": "string",
-          "format": "date-time",
-          "description": "The date time."
-        },
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The call count of the hit API."
-        }
-      },
-      "required": [
-        "dateTime",
-        "count"
-      ]
-    },
     "Feature": {
       "type": "object",
       "description": "Whitelist features.",
@@ -924,32 +910,6 @@
       "required": [
         "dateTime",
         "severityCounts"
-      ]
-    },
-    "RequiredProjectNameQueryParameter": {
-      "type": "object",
-      "description": "Provides the 'projectName' query parameter for list operations.",
-      "properties": {
-        "projectName": {
-          "type": "string",
-          "description": "The project name. Service will throw 404 if project does not exist."
-        }
-      },
-      "required": [
-        "projectName"
-      ]
-    },
-    "RequiredRejectKindQueryParameter": {
-      "type": "object",
-      "description": "Provides the 'projectName' query parameter for list operations.",
-      "properties": {
-        "rejectKind": {
-          "$ref": "#/definitions/RejectKind",
-          "description": "The project name. Service will throw 404 if project does not exist."
-        }
-      },
-      "required": [
-        "rejectKind"
       ]
     },
     "Severity": {
@@ -1244,6 +1204,42 @@
       "description": "The project name. Service will throw 404 if project does not exist.",
       "required": false,
       "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "RequiredProjectNameQueryParameter": {
+      "name": "projectName",
+      "in": "query",
+      "description": "The project name. Service will throw 404 if project does not exist.",
+      "required": false,
+      "type": "string",
+      "x-ms-parameter-location": "method"
+    },
+    "RequiredRejectKindQueryParameter": {
+      "name": "rejectKind",
+      "in": "query",
+      "description": "The project name. Service will throw 404 if project does not exist.",
+      "required": false,
+      "type": "string",
+      "enum": [
+        "AI",
+        "General"
+      ],
+      "x-ms-enum": {
+        "name": "RejectKind",
+        "modelAsString": true,
+        "values": [
+          {
+            "name": "AI",
+            "value": "AI",
+            "description": "AI reject."
+          },
+          {
+            "name": "General",
+            "value": "General",
+            "description": "General reject, determined by AI and blocklist."
+          }
+        ]
+      },
       "x-ms-parameter-location": "method"
     },
     "StartTimeQueryParameter": {
