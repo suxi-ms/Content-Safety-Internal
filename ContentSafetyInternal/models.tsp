@@ -56,7 +56,7 @@ enum ContentSafetyOperation {
   @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
   DetectJailbreak,
   @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
-  DetectProtectedMaterial
+  DetectProtectedMaterialText,
 }
 
 @doc("Content safety API version.")

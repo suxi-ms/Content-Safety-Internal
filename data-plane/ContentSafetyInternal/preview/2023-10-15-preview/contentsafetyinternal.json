@@ -712,7 +712,7 @@
         "AnalyzeText",
         "AnalyzeImage",
         "DetectJailbreak",
-        "DetectProtectedMaterial"
+        "DetectProtectedMaterialText"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
@@ -1110,7 +1110,7 @@
         "AnalyzeText",
         "AnalyzeImage",
         "DetectJailbreak",
-        "DetectProtectedMaterial"
+        "DetectProtectedMaterialText"
       ],
       "x-ms-enum": {
         "name": "ContentSafetyOperation",
