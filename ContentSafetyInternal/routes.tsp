@@ -125,7 +125,8 @@ interface Metrics {
   >;
 
   @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
-  @removed(ContentSafetyInternal.Versions.v2023_10_30_Preview)
+  @added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
+  @added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
   @route("/metrics")
   @summary("List API Reject Counts At Different Timestamps Given A Time Range.")
   @doc("List API reject counts at different timestamps given a time range. Default maxpagesize is 1000.")
@@ -142,27 +143,6 @@ interface Metrics {
       ...ContentSafetyOperationQueryParameter,
       ...RequiredProjectNameQueryParameter,
       ...RequiredRejectKindQueryParameter
-    }>
-  >;
-
-
-  @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
-  @added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
-  @added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
-  @route("/metrics")
-  @summary("List API Detected Counts At Different Timestamps Given A Time Range.")
-  @doc("List API detected counts at different timestamps given a time range. Default maxpagesize is 1000.")
-  op listDetectedCounts is BlockOps.ResourceList<
-    DetectCountsPerTimestamp,
-    ListQueryParametersTrait<{
-      ...SkipQueryParameter,
-      ...TopQueryParameter,
-      ...MaxPageSizeQueryParameter,
-      ...StartTimeQueryParameter,
-      ...EndTimeQueryParameter,
-      ...TimeGranularityQueryParameter,
-      ...ContentSafetyVersionQueryParameter,
-      ...ContentSafetyOperationQueryParameter
     }>
   >;
 

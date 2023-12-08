@@ -257,7 +257,7 @@ model ProjectNameQueryParameter {
 model RequiredProjectNameQueryParameter {
   @query
   @doc("The project name. Service will throw 404 if project does not exist.")
-  projectName: string;
+  projectName?: string;
 }
 
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
@@ -265,7 +265,7 @@ model RequiredProjectNameQueryParameter {
 model RequiredRejectKindQueryParameter {
   @query
   @doc("The project name. Service will throw 404 if project does not exist.")
-  rejectKind: RejectKind;
+  rejectKind?: RejectKind;
 }
 
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
@@ -278,6 +278,8 @@ enum RejectKind {
 }
 
 @added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
+@added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
+@added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
 @doc("API reject count at a timestamp.")
 @resource("rejectCounts")
 model RejectCountPerTimestamp {
@@ -287,20 +289,5 @@ model RejectCountPerTimestamp {
   dateTime: utcDateTime;
 
   @doc("The count of the API request.")
-  count: int32;
-}
-
-@added(ContentSafetyInternal.Versions.v2023_10_15_Preview)
-@added(ContentSafetyInternal.Versions.v2023_10_30_Preview)
-@added(ContentSafetyInternal.Versions.v2023_11_30_Preview)
-@doc("Detected counts at a timestamp")
-@resource("detectCounts")
-model DetectCountsPerTimestamp {
-  #suppress "@azure-tools/typespec-azure-core/key-visibility-required" "Properties in response-only schemas should not be marked readOnly"
-  @key("dateTime")
-  @doc("The date time.")
-  dateTime: utcDateTime;
-
-  @doc("The call count of the hit API.")
   count: int32;
 }
